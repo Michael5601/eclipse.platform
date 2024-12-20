@@ -5,8 +5,8 @@
      <extension id="ide" point="org.eclipse.core.runtime.products"> 
       <product name="%productName" application="org.eclipse.ui.ide.workbench" description="%productBlurb"> 
           <!-- For documentation on updating icons, see http://wiki.eclipse.org/Platform-releng/Updating_Branding -->
-          <property name="windowImages" value="eclipse16.png,eclipse32.png,eclipse48.png"/> 
-          <property name="aboutImage" value="eclipse_lg.png"/> 
+          <property name="windowImages" value="eclipse16.svg,eclipse32.svg,eclipse48.svg"/> 
+          <property name="aboutImage" value="eclipse_lg.svg"/> 
           <property name="aboutText" value="%productBlurb"/> 
           <property name="appName" value="Eclipse"/> 
           <property name="preferenceCustomization" value="plugin_customization.ini"/> 
@@ -107,7 +107,7 @@
                class="org.eclipse.ui.cheatsheets.CheatSheetExtensionFactory:helpMenuAction"
                menubarPath="help/group.tutorials"
                id="org.eclipse.ui.cheatsheets.actions.CheatSheetHelpMenuAction"
-               icon="$nl$/icons/etool16/cheatsheet_view.png">
+               icon="$nl$/icons/etool16/cheatsheet_view.svg">
          </action>
       </actionSet>
    </extension>
