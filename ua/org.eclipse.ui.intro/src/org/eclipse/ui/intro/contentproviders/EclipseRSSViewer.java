@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import javax.xml.parsers.SAXParser;
+
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IPath;
@@ -211,7 +212,7 @@ public class EclipseRSSViewer implements IIntroContentProvider {
 					doNavigate((String) e.getHref());
 				}
 			});
-			bulletImage = createImage(IPath.fromOSString("icons/arrow.png")); //$NON-NLS-1$
+			bulletImage = createImage(IPath.fromOSString("icons/arrow.svg")); //$NON-NLS-1$
 			if (bulletImage != null)
 				formText.setImage(HREF_BULLET, bulletImage);
 			this.parent = parent;
@@ -234,8 +235,7 @@ public class EclipseRSSViewer implements IIntroContentProvider {
 			buffer.append("</p>"); //$NON-NLS-1$
 		} else {
 			if (items.size() > 0) {
-				for (int i = 0; i < items.size(); i++) {
-					NewsItem item = items.get(i);
+				for (NewsItem item : items) {
 					buffer.append("<li style=\"image\" value=\""); //$NON-NLS-1$
 					buffer.append(HREF_BULLET);
 					buffer.append("\">"); //$NON-NLS-1$
@@ -464,8 +464,8 @@ public class EclipseRSSViewer implements IIntroContentProvider {
 		if (query != null && query.length() > 1) {
 			//String qs = query.substring(1);
 			String[] kvPairs = query.split("##"); //$NON-NLS-1$
-			for (int i = 0; i < kvPairs.length; i++) {
-				String[] kv = kvPairs[i].split("=", 2); //$NON-NLS-1$
+			for (String kvPair : kvPairs) {
+				String[] kv = kvPair.split("=", 2); //$NON-NLS-1$
 				if (kv.length > 1) {
 					_params.put(kv[0], kv[1]);
 				} else {

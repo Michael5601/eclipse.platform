@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -589,9 +588,7 @@ public class EditionSelectionDialog extends ResizableDialog {
 	public ITypedElement[] getSelection() {
 		ArrayList<ITypedElement> result= new ArrayList<>();
 		if (fMemberSelection != null) {
-			Iterator<Object> iter= fArrayList.iterator();
-			while (iter.hasNext()) {
-				Object edition= iter.next();
+			for (Object edition : fArrayList) {
 				Object item= fMemberSelection.get(edition);
 				if (item != null)
 					result.add((ITypedElement) item);
@@ -727,7 +724,7 @@ public class EditionSelectionDialog extends ResizableDialog {
 			return selectedEdition.getImage();
 		if (selectedEdition instanceof HistoryItem) {
 			if (fTimeImage == null) {
-				String iconName= Utilities.getString(fBundle, "timeIcon", "obj16/resource_obj.png"); //$NON-NLS-1$ //$NON-NLS-2$
+				String iconName = Utilities.getString(fBundle, "timeIcon", "obj16/resource_obj.svg"); //$NON-NLS-1$ //$NON-NLS-2$
 				ImageDescriptor id= CompareUIPlugin.getImageDescriptor(iconName);
 				if (id != null)
 					fTimeImage= id.createImage();
@@ -1031,7 +1028,7 @@ public class EditionSelectionDialog extends ResizableDialog {
 		if (lastDay == null || day != dayNumber(((Date)lastDay.getData()).getTime())) {
 			lastDay= new TreeItem(fEditionTree, SWT.NONE);
 			if (fDateImage == null) {
-				String iconName= Utilities.getString(fBundle, "dateIcon", "obj16/day_obj.png"); //$NON-NLS-2$ //$NON-NLS-1$
+				String iconName = Utilities.getString(fBundle, "dateIcon", "obj16/day_obj.svg"); //$NON-NLS-2$ //$NON-NLS-1$
 				ImageDescriptor id= CompareUIPlugin.getImageDescriptor(iconName);
 				if (id != null)
 					fDateImage= id.createImage();
@@ -1103,9 +1100,7 @@ public class EditionSelectionDialog extends ResizableDialog {
 				String title= MessageFormat.format(pattern, ((Item)w).getText());
 				fEditionPane.setText(title);
 
-				Iterator<Object> iter= editions.iterator();
-				while (iter.hasNext()) {
-					Object item= iter.next();
+				for (Object item : editions) {
 					if (item instanceof Pair)
 						addEdition((Pair) item);
 				}
