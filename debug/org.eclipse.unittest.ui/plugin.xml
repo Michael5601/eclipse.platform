@@ -60,7 +60,7 @@
       <image
             commandId="org.eclipse.unittest.ui.history"
             disabledIcon="icons/full/dlcl16/history_list.png"
-            icon="icons/full/elcl16/history_list.png">
+            icon="icons/full/elcl16/history_list.svg">
       </image>
    </extension>
 
