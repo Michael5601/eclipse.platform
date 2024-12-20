@@ -86,7 +86,7 @@ public class BrowserIntroPartImplementation extends
 		{
 			setToolTipText(Messages.Browser_reduce_tooltip);
 			setImageDescriptor(ImageUtil
-				.createImageDescriptor("full/elcl16/reduce_font.png")); //$NON-NLS-1$
+					.createImageDescriptor("full/elcl16/reduce_font.svg")); //$NON-NLS-1$
 			setDisabledImageDescriptor(ImageUtil
 					.createImageDescriptor("full/dlcl16/reduce_font.png")); //$NON-NLS-1$
 			int scalePercent = FontSelection.getScalePercentage();
@@ -106,7 +106,7 @@ public class BrowserIntroPartImplementation extends
 		{
 			setToolTipText(Messages.Browser_magnify_tooltip);
 			setImageDescriptor(ImageUtil
-				.createImageDescriptor("full/elcl16/magnify_font.png")); //$NON-NLS-1$
+					.createImageDescriptor("full/elcl16/magnify_font.svg")); //$NON-NLS-1$
 			setDisabledImageDescriptor(ImageUtil
 					.createImageDescriptor("full/dlcl16/magnify_font.png")); //$NON-NLS-1$
 			int scalePercent = FontSelection.getScalePercentage();
@@ -136,7 +136,7 @@ public class BrowserIntroPartImplementation extends
 		{
 			setToolTipText(Messages.IntroPart_openExternal_tooltip);
 			setImageDescriptor(ImageUtil
-				.createImageDescriptor("topic.png")); //$NON-NLS-1$
+					.createImageDescriptor("topic.svg")); //$NON-NLS-1$
 		}
 
 		@Override
@@ -454,8 +454,8 @@ public class BrowserIntroPartImplementation extends
 
 		// get the array version of the nodelist to work around DOM api design.
 		Node[] nodes = ModelUtil.getArray(contentProviders);
-		for (int i = 0; i < nodes.length; i++) {
-			Element contentProviderElement = (Element) nodes[i];
+		for (Node node : nodes) {
+			Element contentProviderElement = (Element) node;
 			IntroContentProvider provider = new IntroContentProvider(
 				contentProviderElement, page.getBundle());
 			provider.setParent(page);
@@ -494,10 +494,10 @@ public class BrowserIntroPartImplementation extends
 
 	private void reinjectDynamicContent(Document dom,
 			Node[] contentProviderElements) {
-		for (int i = 0; i < contentProviderElements.length; i++) {
+		for (Node contentProviderElement2 : contentProviderElements) {
 			// for each cached contentProvider, find replacement div in DOM and
 			// re-subsitute.
-			Element contentProviderElement = (Element) contentProviderElements[i];
+			Element contentProviderElement = (Element) contentProviderElement2;
 			Element contentProviderDiv = ModelUtil.getElementById(dom,
 				contentProviderElement
 					.getAttribute(IIntroHTMLConstants.ATTRIBUTE_ID),
