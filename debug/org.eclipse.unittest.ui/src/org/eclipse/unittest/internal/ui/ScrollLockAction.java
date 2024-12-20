@@ -34,8 +34,8 @@ public class ScrollLockAction extends Action {
 		fRunnerViewPart = viewer;
 		setToolTipText(Messages.ScrollLockAction_action_tooltip);
 		setDisabledImageDescriptor(Images.getImageDescriptor("dlcl16/lock.png")); //$NON-NLS-1$
-		setHoverImageDescriptor(Images.getImageDescriptor("elcl16/lock.png")); //$NON-NLS-1$
-		setImageDescriptor(Images.getImageDescriptor("elcl16/lock.png")); //$NON-NLS-1$
+		setHoverImageDescriptor(Images.getImageDescriptor("elcl16/lock.svg")); //$NON-NLS-1$
+		setImageDescriptor(Images.getImageDescriptor("elcl16/lock.svg")); //$NON-NLS-1$
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, IUnitTestHelpContextIds.OUTPUT_SCROLL_LOCK_ACTION);
 		setChecked(false);
 	}
