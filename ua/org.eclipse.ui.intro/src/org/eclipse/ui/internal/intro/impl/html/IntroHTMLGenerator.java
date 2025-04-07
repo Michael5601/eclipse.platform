@@ -184,8 +184,8 @@ public class IntroHTMLGenerator {
 		String[] presentationStyles = IntroPlugin.getDefault().getIntroModelRoot().getPresentation()
 				.getImplementationStyles();
 		if (presentationStyles != null && introPage.injectSharedStyle()) {
-			for (int i=0; i<presentationStyles.length; i++)
-				head.addContent(generateLinkElement(presentationStyles[i], indentLevel + 1));
+			for (String presentationStyle : presentationStyles)
+				head.addContent(generateLinkElement(presentationStyle, indentLevel + 1));
 		}
 		String pageStyle = introPage.getStyle();
 		if (pageStyle != null)
@@ -195,8 +195,8 @@ public class IntroHTMLGenerator {
 
 		// add the page's inherited style(s)
 		String[] pageStyles = introPage.getStyles();
-		for (int i = 0; i < pageStyles.length; i++) {
-			pageStyle = pageStyles[i];
+		for (String pageStyle2 : pageStyles) {
+			pageStyle = pageStyle2;
 			if (pageStyle != null)
 				head.addContent(generateLinkElement(pageStyle, indentLevel + 1));
 		}
@@ -216,8 +216,8 @@ public class IntroHTMLGenerator {
 		// TODO: there should only be one of these at the page level, not a
 		// collection..
 		IntroHead[] htmlHeads = introPage.getHTMLHeads();
-		for (int i = 0; i < htmlHeads.length; i++) {
-			introHead = htmlHeads[i];
+		for (IntroHead htmlHead : htmlHeads) {
+			introHead = htmlHead;
 			if (introHead != null) {
 				content = readFromFile(introHead.getSrc(), introHead.getInlineEncoding());
 				if (content != null)
@@ -300,8 +300,7 @@ public class IntroHTMLGenerator {
 
 		// Add any children of the page, in the order they are defined
 		AbstractIntroElement[] children = introPage.getChildren();
-		for (int i = 0; i < children.length; i++) {
-			AbstractIntroElement child = children[i];
+		for (AbstractIntroElement child : children) {
 			// use indentLevel + 2 here, since this element is contained within
 			// the pageContentDiv
 			HTMLElement childElement = generateIntroElement(child, indentLevel + 2);
@@ -444,9 +443,8 @@ public class IntroHTMLGenerator {
 			imageUrl = BundleUtil.getResolvedResourceLocation(element.getBase(), imageUrl, element
 					.getBundle());
 			String style;
-			if (Platform.getWS().equals(Platform.WS_WIN32) && !backgroundSizeWorks && imageUrl.toLowerCase().endsWith(".png")) { //$NON-NLS-1$
-				// IE 5.5+ does not handle alphas in PNGs without
-				// this hack. Remove when IE7 becomes widespread
+			if (Platform.getWS().equals(Platform.WS_WIN32) && !backgroundSizeWorks
+					&& imageUrl.toLowerCase().endsWith(".svg")) { //$NON-NLS-1$
 				style = "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + imageUrl + "', sizingMethod='crop');"; //$NON-NLS-1$ //$NON-NLS-2$
 			} else {
 				style = "background-image : url(" + imageUrl + ")"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -455,8 +453,7 @@ public class IntroHTMLGenerator {
 		}
 		// Add any children of the div, in the order they are defined
 		AbstractIntroElement[] children = element.getChildren();
-		for (int i = 0; i < children.length; i++) {
-			AbstractIntroElement child = children[i];
+		for (AbstractIntroElement child : children) {
 			HTMLElement childElement = generateIntroElement(child, indentLevel + 1);
 			if (childElement != null) {
 				addMixinStyle(childElement, child.getMixinStyle());
@@ -1018,10 +1015,10 @@ public class IntroHTMLGenerator {
 			int indentLevel) {
 		HTMLElement image = new FormattedHTMLElement(IIntroHTMLConstants.ELEMENT_IMG, indentLevel, true,
 				false);
-		boolean pngOnWin32 = imageSrc != null && Platform.getWS().equals(Platform.WS_WIN32)
-				&& !backgroundSizeWorks && imageSrc.toLowerCase().endsWith(".png"); //$NON-NLS-1$
-		if (imageSrc == null || pngOnWin32) {
-			// we must handle PNGs here - IE does not support alpha blanding well.
+		boolean svgOnWin32 = imageSrc != null && Platform.getWS().equals(Platform.WS_WIN32)
+				&& !backgroundSizeWorks && imageSrc.toLowerCase().endsWith(".svg"); //$NON-NLS-1$
+		if (imageSrc == null || svgOnWin32) {
+			// IE does not support alpha blanding well.
 			// We will set the alpha image loader and load the real image
 			// that way. The 'src' attribute in the image itself will
 			// get the blank image.
@@ -1029,7 +1026,7 @@ public class IntroHTMLGenerator {
 					IIntroHTMLConstants.IMAGE_SRC_BLANK, IIntroConstants.PLUGIN_ID);
 			if (blankImageURL != null) {
 				image.addAttribute(IIntroHTMLConstants.ATTRIBUTE_SRC, blankImageURL);
-				if (pngOnWin32) {
+				if (svgOnWin32) {
 					String style = "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + imageSrc + "', sizingMethod='image')"; //$NON-NLS-1$//$NON-NLS-2$
 					image.addAttribute(IIntroHTMLConstants.ATTRIBUTE_STYLE, style);
 				}

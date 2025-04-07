@@ -110,8 +110,7 @@ public class UniversalIntroConfigurer extends IntroConfigurer implements
 		}
 		// else, find the most referenced importance style from other products
 		int[] importanceRefs = new int[ExtensionData.IMPORTANCE_TABLE.length];
-		for (int i=0;i<secondaryIntroData.length;++i) {
-			IntroData data = secondaryIntroData[i];
+		for (IntroData data : secondaryIntroData) {
 			int importance = getImportance(data, pageId, extensionId);
 			if (importance >= 0) {
 				++importanceRefs[importance];
@@ -516,14 +515,14 @@ public class UniversalIntroConfigurer extends IntroConfigurer implements
 		// load all other installed (but not running) products' intro data
 		List<IntroData> result = new ArrayList<>();
 		Properties[] prefs = ProductPreferences.getProductPreferences(false);
-		for (int i=0;i<prefs.length;++i) {
+		for (Properties pref : prefs) {
 			String key = UniversalIntroPlugin.PLUGIN_ID + '/' + VAR_INTRO_DATA;
-			String dataFile = prefs[i].getProperty(key);
+			String dataFile = pref.getProperty(key);
 			if (dataFile != null) {
-				String pluginId = ProductPreferences.getPluginId(prefs[i]);
+				String pluginId = ProductPreferences.getPluginId(pref);
 				Bundle bundle = Platform.getBundle(pluginId);
 				if (bundle != null) {
-					String pid = ProductPreferences.getProductId(prefs[i]);
+					String pid = ProductPreferences.getProductId(pref);
 					dataFile = resolveVariable(bundle, dataFile);
 					result.add(new IntroData(pid, dataFile, false));
 				}
@@ -560,8 +559,7 @@ public class UniversalIntroConfigurer extends IntroConfigurer implements
 			primaryAnchors = Collections.emptyList();
 		}
 		List<List<IntroElement>> secondaryAnchors = new ArrayList<>();
-		for (int i=0;i<secondaryIntroData.length;++i) {
-			IntroData idata = secondaryIntroData[i];
+		for (IntroData idata : secondaryIntroData) {
 			List<IntroElement> anchors = getAnchors(idata, pageId, groupId);
 			if (anchors != null) {
 				secondaryAnchors.add(anchors);
@@ -627,8 +625,7 @@ public class UniversalIntroConfigurer extends IntroConfigurer implements
 		}
 		// if not, do the others have preferences?
 		PreferenceArbiter arbiter = new PreferenceArbiter();
-		for (int i=0;i<secondaryIntroData.length;++i) {
-			IntroData idata = secondaryIntroData[i];
+		for (IntroData idata : secondaryIntroData) {
 			PageData pdata = idata.getPage(pageId);
 			if (pdata != null) {
 				arbiter.consider(pdata.resolvePath(extensionId));
@@ -659,8 +656,7 @@ public class UniversalIntroConfigurer extends IntroConfigurer implements
 		}
 		// if not, do the others have preferences?
 		PreferenceArbiter arbiter = new PreferenceArbiter();
-		for (int i=0;i<secondaryIntroData.length;++i) {
-			IntroData idata = secondaryIntroData[i];
+		for (IntroData idata : secondaryIntroData) {
 			PageData pdata = idata.getPage(pageId);
 			if (pdata != null) {
 				arbiter.consider(pdata.resolveDefaultPath());
@@ -687,7 +683,7 @@ public class UniversalIntroConfigurer extends IntroConfigurer implements
 		customizeAction
 				.setToolTipText(Messages.SharedIntroConfigurer_customize_text);
 		customizeAction.setImageDescriptor(ImageUtil
-				.createImageDescriptor("full/elcl16/configure.png")); //$NON-NLS-1$
+				.createImageDescriptor("full/elcl16/configure.svg")); //$NON-NLS-1$
 		site.getActionBars().getToolBarManager().appendToGroup(TB_ADDITIONS,
 				customizeAction);
 	}
